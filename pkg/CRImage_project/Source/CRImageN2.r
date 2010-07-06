@@ -548,9 +548,9 @@ classifyCells=function(classifier,filename="",image=NA,segmentedImage=NA,feature
 		print(classValues)
 		if(paint==TRUE){
 			paintedCells=paintCells(segmentedImage,image,as.character(classSVM),indexCells,classValues)
-			list(as.character(classSVM),paintedCells)
+			list(as.character(classSVM),paintedCells,cbind(indexCells,cellCoordinates,as.character(classSVM)))
 		}else{
-			list(as.character(classSVM))
+			list(as.character(classSVM),cbind(indexCells,cellCoordinates,as.character(classSVM)))
 		}
 
 }
@@ -811,7 +811,7 @@ findSlices=function(imgFolder,pathToOutputFolder,numSlides){
 	l=list(blockSlice,sizeO)
 }
 # classifies an image, calls image segmentation, the classification of the cells, calculation of the cellularity and the drawing of the nuclei
-classificationAperio=function(fileLocation,filename,pathToOutputFolderImgDir,classifier,pathToOutputFolderImgDirFiles,pathToOutputFolderImgDirImages,pathToOutputFolderImgDirCellDensity,blockSlice,sliceColors,sizeO,index,cancerIdentifier){
+classificationAperio=function(fileLocation,filename,pathToOutputFolderImgDir,classifier,pathToOutputFolderImgDirFiles,pathToOutputFolderImgDirImages,pathToOutputFolderImgDirCellDensity,blockSlice,sliceColors,sizeO,index,cancerIdentifier,pathToOutputFolderImgDirCellCoordinates){
 				widthO=as.numeric(as.character(sizeO[1]))
 				heightO=as.numeric(as.character(sizeO[2]))
 				pathToFile=paste(fileLocation,filename,sep="/")
@@ -843,6 +843,8 @@ classificationAperio=function(fileLocation,filename,pathToOutputFolderImgDir,cla
 				classValues=classifyCells(classifier,image=img,segmentedImage=imgW,featuresObjects=cellData,paint=TRUE,KS=TRUE,cancerIdentifier=cancerIdentifier)
 				classes=classValues[[1]]
 				writeImage(classValues[[2]],paste(pathToOutputFolderImgDir,filename,sep="/"))
+				colnames(classValues[[3]])=c("index","g.x","g.y","class")
+				write.table(classValues[[3]],paste(pathToOutputFolderImgDirCellCoordinates,paste(nameFile,".txt",sep=""),sep="/"),row.names=FALSE,quote=FALSE)
 				classes=as.character(classes)
 				classifiedCells=cellData
 				
@@ -914,9 +916,11 @@ processAperio=function(classifier=classifier,inputFolder=inputFolder,outputFolde
 	pathToOutputFolderImgDir=paste(pathToOutputFolder,"classifiedImage",sep="")
 	pathToOutputFolderImgDirFiles=paste(pathToOutputFolder,"Files",sep="")
 	pathToOutputFolderImgDirCellDensity=paste(pathToOutputFolder,"tumourDensity",sep="")
+	pathToOutputFolderImgDirCellCoordinates=paste(pathToOutputFolder,"cellCoordinates",sep="")
 	dir.create(pathToOutputFolderImgDir)
 	dir.create(pathToOutputFolderImgDirFiles)
 	dir.create(pathToOutputFolderImgDirCellDensity)
+	dir.create(pathToOutputFolderImgDirCellCoordinates)
 	#finds the right section for every subimage
 	sliceSizeList=try(findSlices(inputFolder,pathToOutputFolder,numSlides))
 	print(inherits(sliceSizeList,"try-error"))
@@ -936,7 +940,7 @@ processAperio=function(classifier=classifier,inputFolder=inputFolder,outputFolde
 	filenames=list.files(path =pathToFolder ,pattern=identifier)
 	print(filenames)
 	allCells=foreach( i = 1:length(filenames), .combine=rbind) %do% {
-			classificationError=try(classificationAperio(pathToFolder,filenames[i],pathToOutputFolderImgDir,classifier,pathToOutputFolderImgDirFiles,pathToOutputFolderImgDir,pathToOutputFolderImgDirCellDensity,blockSlice,sliceColors,sizeO,i,cancerIdentifier))
+			classificationError=try(classificationAperio(pathToFolder,filenames[i],pathToOutputFolderImgDir,classifier,pathToOutputFolderImgDirFiles,pathToOutputFolderImgDir,pathToOutputFolderImgDirCellDensity,blockSlice,sliceColors,sizeO,i,cancerIdentifier,pathToOutputFolderImgDirCellCoordinates))
 			print(inherits(classificationError,"try-error"))
 		}
 		print("write all cells")
