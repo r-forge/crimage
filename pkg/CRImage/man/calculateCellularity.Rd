@@ -22,7 +22,7 @@ calculateCellularity(filename = "", image = NA, classifier, cancerIdentifier, KS
 }
 \value{
   A list containing
-  \item{cellulairty values }{a vector, the n first values indicate the n numbers of cells in the n classes, the n+1 value indicates the tumour cellularity}
+  \item{cellularity values }{a vector, the n first values indicate the n numbers of cells in the n classes, the n+1 value indicates the tumour cellularity}
   \item{comp2 }{a 'Image' object}
   ...
 }
@@ -47,30 +47,6 @@ classifier=createClassifier(trainingData,topo=FALSE)[[1]]
 f = system.file("data", "exImg.jpg", package="CRImage")
 exImg=readImage(f)
 cellularityValues=calculateCellularity(f,classifier=classifier,cancerIdentifier="1")
-
-
-
-
-
-## The function is currently defined as
-function(filename="",image=NA,classifier,cancerIdentifier){
-	print(filename)
-	print(cancerIdentifier)
-    if(filename !=""){
-		imageData=try(segmentImage(filename=filename,image=NA))
-	}else{
-		imageData=try(segmentImage(filename="",image=image))
-	}
-	print(inherits(imageData,"try-error"))
-	img=imageData[[1]]
-	imgW=imageData[[2]]
-	cellData=imageData[[3]]
-	indexWhitePixel=imageData[[4]]
-	print(indexWhitePixel)
-	classes=classifyCells(classifier,"",img,imW,cellData,FALSE)
-	cellularity=try(determineCellularity(classes[[1]],cellData,dim(imgW),img,imgW,indexWhitePixel,cancerIdentifier))
-	cellularity
-  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

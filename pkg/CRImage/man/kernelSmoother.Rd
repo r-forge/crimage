@@ -1,18 +1,20 @@
-\name{findSlices}
-\alias{findSlices}
+\name{kernelSmoother}
+\alias{kernelSmoother}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ ~~function to do ... ~~ }
 \description{
   ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-findSlices(imgFolder, pathToOutputFolder, numSlides)
+kernelSmoother(predictedClasses, cellCoordinates, segmentedImage, cancerIdentifier, indexCells)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{imgFolder}{ ~~Describe \code{imgFolder} here~~ }
-  \item{pathToOutputFolder}{ ~~Describe \code{pathToOutputFolder} here~~ }
-  \item{numSlides}{ ~~Describe \code{numSlides} here~~ }
+  \item{predictedClasses}{ ~~Describe \code{predictedClasses} here~~ }
+  \item{cellCoordinates}{ ~~Describe \code{cellCoordinates} here~~ }
+  \item{segmentedImage}{ ~~Describe \code{segmentedImage} here~~ }
+  \item{cancerIdentifier}{ ~~Describe \code{cancerIdentifier} here~~ }
+  \item{indexCells}{ ~~Describe \code{indexCells} here~~ }
 }
 \details{
   ~~ If necessary, more details than the description above ~~

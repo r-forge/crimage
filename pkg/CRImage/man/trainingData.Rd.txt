@@ -1,0 +1,15 @@
+ \name{trainingData}
+     \docType{data}
+     \alias{trainingData}
+     \title{Cell nuclei features for a classifier}
+     \description{
+       This data set contains features (columns) for segmented cell nuclei    (rows) as well as class values for these nuclei. The features were created with EBImage.
+     }
+     \usage{trainingData}
+     \format{A taible containing 101 features for 2740 cell nuclei.}
+     \source{World Almanac and Book of Facts, 1975, page 406.}
+     \references{
+       McNeil, D. R. (1977) \emph{Interactive Data Analysis}.
+       New York: Wiley.
+     }
+     \keyword{datasets}

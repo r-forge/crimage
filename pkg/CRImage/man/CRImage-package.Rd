@@ -3,12 +3,14 @@
 \alias{CRImage}
 \docType{package}
 \title{
-What the package does (short line)
-~~ package title ~~
+CRImage is a package to analyze images and classify cells.
 }
 \description{
-More about what it does (maybe more than one line)
-~~ A concise (1-5 lines) description of the package ~~
+CRImage allows classification of cells in biological images. It offers methods to segment cells or cell nuclei
+in biological images for example HE stained images. It offers methods to create classifiers and to classify cells in these images.
+Furthermore it allows the calculation of tumour cellularities for large microscopical slides.
+
+CRImage makes use of the image processing package EBImage, which uses the 'ImageMagick' library for image I/O operations and the 'GTK' library to display images.
 }
 \details{
 \tabular{ll}{
@@ -23,20 +25,24 @@ LazyLoad: \tab yes\cr
 ~~ functions ~~
 }
 \author{
-Who wrote it
+Henrik Failmezger, failmezger@cip.ifi.lmu.de
+Yinyin Yuan
+Florian Markowetz
 
-Maintainer: Who to complain to <yourfault@somewhere.net>
-~~ The author and/or maintainer of the package ~~
+CRI Cambridge
+Ludwigs-Maximilians University of Munich
+Technical University of Munich
+
+
 }
 \references{
 ~~ Literature or other references for background information ~~
 }
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in ~~
-~~ the R documentation directory ~~
+
 \keyword{misc}
-\seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
-}
+
 \examples{
+example(segmentImage)
+example(createClassifier)
+example(classifyImage)
 }

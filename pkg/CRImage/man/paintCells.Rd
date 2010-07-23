@@ -38,27 +38,7 @@ paintCells(imgWT, img, classes, index, classValues)
 ##-- ==>  Define data, use random,
 ##--	or do  help(data=index)  for the standard data sets.
 
-## The function is currently defined as
-function(imgWT,img,classes,index,classValues){
-	indexClass=cbind(index,classes)
-	indexClass=rep("n",max(imgWT))
-	indexClass[index]=classes
-	indexClass=c(indexClass,"n")
-	imgOld=img
-	cols=c("red","green","yellow","orange","blue")
-	counter=1
-	for (c in classValues){
-		imgTC=imgWT
-		imgTC[imgTC==0]=length(indexClass)
-		a=array(indexClass[imgTC] !=c ,dim(imgWT))
-		imgTC[a]=0
-		imgTC[imgTC==length(indexClass)]=0
-		imgOld = paintObjects(imgTC,imgOld,col=cols[counter])
-		counter=counter+1
-	}
-	
-	imgOld
-  }
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
